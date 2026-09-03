@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Knowledge Hub | Pad Koi</title>
+<meta name="description" content="Concise, respectful and evidence-informed reading on menstrual health, hygiene and support — from Pad Koi by ScriptySphere." />
+<link rel="canonical" href="https://YOUR-DOMAIN-HERE.example/knowledge.html" />
+
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#E83E8C" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M20 3C12 3 6 10 6 18c0 9.5 10.5 17.5 13.2 19.4a1.4 1.4 0 0 0 1.6 0C23.5 35.5 34 27.5 34 18 34 10 28 3 20 3Z" fill="#E83E8C"/>
+        <circle cx="20" cy="19" r="7" fill="#FFF7FA"/>
+        <path d="M20 14.5c0 2.5-3.6 4-3.6 6.7a3.6 3.6 0 0 0 7.2 0c0-2.7-3.6-4.2-3.6-6.7Z" fill="#B91C62"/>
+      </svg>
+      <span><span class="brand__name">Pad Koi</span><span class="brand__by">by ScriptySphere</span></span>
+    </a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><i data-lucide="menu"></i></button>
+    <nav class="nav-menu" aria-label="Primary">
+      <a href="index.html#find-pads" data-i18n="nav.findPads">Find Pads</a>
+      <a href="index.html#map-section" data-i18n="nav.map">Map</a>
+      <a href="emergency.html" data-i18n="nav.emergency">Emergency</a>
+      <a href="knowledge.html" data-i18n="nav.knowledge">Knowledge</a>
+      <a href="about.html" data-i18n="nav.about">About</a>
+    </nav>
+    <div class="nav-right">
+      <button class="lang-btn" data-lang-toggle data-i18n="language.toggle" aria-label="Switch language">বাংলা</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h1 data-i18n="knowledge.title">Pad Koi Knowledge Hub</h1>
+        <p data-i18n="knowledge.subtitle">Short, respectful and evidence-informed reads on menstrual health.</p>
+      </div>
+      <div class="knowledge-grid" id="knowledge-hub-full"></div>
+      <p style="margin-top:32px; color:var(--color-text-secondary); font-size:0.9rem;">
+        This content is educational and does not replace professional medical advice. If you have concerns about your health, please speak with a qualified healthcare provider.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:1px solid rgba(255,255,255,0.12);padding-top:20px;">
+      <span>© <span data-year></span> ScriptySphere · <span data-i18n="footer.project">A project of ScriptySphere</span></span>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="js/config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/stores.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

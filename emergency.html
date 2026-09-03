@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Emergency Pad Access | Pad Koi</title>
+<meta name="description" content="Need a pad urgently? Pad Koi's Emergency Mode shows the closest open stores, 24-hour shops and Pad Koi Emergency Points first." />
+<link rel="canonical" href="https://YOUR-DOMAIN-HERE.example/emergency.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Emergency Pad Access | Pad Koi" />
+<meta property="og:description" content="Need a pad urgently? Pad Koi's Emergency Mode shows the closest open stores, 24-hour shops and Pad Koi Emergency Points first." />
+<meta property="og:url" content="https://YOUR-DOMAIN-HERE.example/emergency.html" />
+
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#DC2626" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-emergency-page>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M20 3C12 3 6 10 6 18c0 9.5 10.5 17.5 13.2 19.4a1.4 1.4 0 0 0 1.6 0C23.5 35.5 34 27.5 34 18 34 10 28 3 20 3Z" fill="#E83E8C"/>
+        <circle cx="20" cy="19" r="7" fill="#FFF7FA"/>
+        <path d="M20 14.5c0 2.5-3.6 4-3.6 6.7a3.6 3.6 0 0 0 7.2 0c0-2.7-3.6-4.2-3.6-6.7Z" fill="#B91C62"/>
+      </svg>
+      <span><span class="brand__name">Pad Koi</span><span class="brand__by">by ScriptySphere</span></span>
+    </a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><i data-lucide="menu"></i></button>
+    <nav class="nav-menu" aria-label="Primary">
+      <a href="index.html#find-pads" data-i18n="nav.findPads">Find Pads</a>
+      <a href="index.html#map-section" data-i18n="nav.map">Map</a>
+      <a href="emergency.html" data-i18n="nav.emergency">Emergency</a>
+      <a href="knowledge.html" data-i18n="nav.knowledge">Knowledge</a>
+      <a href="about.html" data-i18n="nav.about">About</a>
+    </nav>
+    <div class="nav-right">
+      <button class="lang-btn" data-lang-toggle data-i18n="language.toggle" aria-label="Switch language">বাংলা</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="section" style="padding-top:40px;padding-bottom:24px;">
+    <div class="container">
+      <span class="pill pill--emergency" style="font-size:0.8rem;padding:6px 14px;margin-bottom:16px;display:inline-flex;">
+        <i data-lucide="life-buoy" style="width:14px;height:14px;margin-right:6px;"></i> Emergency Mode
+      </span>
+      <h1 data-i18n="emergency.title" style="margin-bottom:8px;">Need a pad urgently?</h1>
+      <p class="hero__subtitle" data-i18n="emergency.subtitle">Emergency mode shows the closest open locations first — including verified stores, 24-hour shops and Pad Koi Emergency Points.</p>
+      <div class="hero__actions">
+        <button class="btn btn--emergency" data-action="find-near-me">
+          <i data-lucide="locate-fixed"></i> <span data-i18n="hero.ctaPrimary">Find Pads Near Me</span>
+        </button>
+      </div>
+      <p id="location-status" class="location-status" hidden></p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="manual-search" style="margin-bottom:20px;max-width:560px;">
+        <label for="manual-area-input" class="visually-hidden" data-i18n="search.manualLabel">Or search an area manually</label>
+        <input id="manual-area-input" type="text" data-i18n-placeholder="search.manualPlaceholder" placeholder="e.g. Mirpur, Dhanmondi, Uttara" />
+        <button id="manual-search-btn" class="btn btn--ghost" data-i18n="search.button">Search</button>
+      </div>
+      <input type="hidden" id="store-search-input" />
+
+      <div class="filters-bar">
+        <h2 style="margin:0;">Closest open locations</h2>
+        <button id="filters-toggle" class="btn btn--ghost filters-toggle-btn" aria-expanded="false" aria-controls="filters-panel">
+          <i data-lucide="sliders-horizontal"></i> <span data-i18n="filters.title">Filters</span>
+        </button>
+      </div>
+
+      <div class="filters-panel" id="filters-panel">
+        <div class="filter-group">
+          <h4 data-i18n="filters.title">Filters</h4>
+          <label class="checkbox-row"><input type="checkbox" id="filter-verified-only" /> <span data-i18n="filters.verifiedOnly">Verified only</span></label>
+          <label class="checkbox-row"><input type="checkbox" id="filter-available-now" /> <span data-i18n="filters.availableNow">Available now</span></label>
+        </div>
+        <div class="filter-group">
+          <h4 data-i18n="nav.findPads">Store type</h4>
+          <label class="checkbox-row"><input type="checkbox" data-filter-type value="emergency" /> <span data-i18n="filters.emergency">Emergency Pad Point</span></label>
+          <label class="checkbox-row"><input type="checkbox" data-filter-type value="vending" /> <span data-i18n="filters.vending">Vending machine</span></label>
+          <label class="checkbox-row"><input type="checkbox" data-filter-type value="pharmacy" /> <span data-i18n="filters.pharmacy">Pharmacy</span></label>
+        </div>
+        <div class="filter-group">
+          <h4 data-i18n="filters.nearest">Distance</h4>
+          <select id="filter-distance">
+            <option value="">—</option>
+            <option value="500" data-i18n="filters.distance500">Within 500 m</option>
+            <option value="1000" data-i18n="filters.distance1000">Within 1 km</option>
+            <option value="2000" data-i18n="filters.distance2000">Within 2 km</option>
+            <option value="5000" data-i18n="filters.distance5000">Within 5 km</option>
+          </select>
+          <button id="filters-clear" class="btn btn--ghost btn--sm" style="margin-top:12px;" data-i18n="filters.clear">Clear filters</button>
+        </div>
+      </div>
+
+      <div class="finder-layout" id="results-section">
+        <div class="map-panel">
+          <div id="padkoi-map" role="application" aria-label="Map of emergency pad locations"></div>
+        </div>
+        <div>
+          <div class="results-header">
+            <span><strong id="results-count">0</strong> locations</span>
+          </div>
+          <div id="results-list" class="results-list"></div>
+          <div id="results-empty" class="results-empty" hidden>
+            <i data-lucide="search-x"></i>
+            <h3 data-i18n="results.empty.title">No pad locations found nearby.</h3>
+            <p data-i18n="results.empty.body">Try expanding your search radius or searching another area.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:1px solid rgba(255,255,255,0.12);padding-top:20px;">
+      <span>© <span data-year></span> ScriptySphere · <span data-i18n="footer.project">A project of ScriptySphere</span></span>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="js/config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/stores.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/map.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
